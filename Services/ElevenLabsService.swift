@@ -1,122 +1,332 @@
 import Foundation
 import Combine
 
-// NOTE: This is a placeholder implementation
-// You'll need to integrate the ElevenLabs iOS SDK
-// Documentation: https://elevenlabs.io/docs/conversational-ai/overview
+// IMPORTANT: Uncomment the line below after adding the ElevenLabs Swift Package
+// import ElevenLabs
 
+/// Service for managing ElevenLabs Conversational AI integration
+/// Handles voice conversations with the AI coach
 @MainActor
 class ElevenLabsService: ObservableObject {
+    // MARK: - Published Properties
+
     @Published var isConnected = false
     @Published var isListening = false
     @Published var isSpeaking = false
     @Published var error: Error?
+    @Published var messages: [ConversationMessage] = []
 
-    private let apiKey: String
+    // MARK: - Private Properties
+
     private let agentId: String
+    private var conversation: Any? // Will be Conversation? after import
+    private var cancellables = Set<AnyCancellable>()
+
+    // MARK: - Initialization
 
     init() {
-        self.apiKey = Constants.ElevenLabs.apiKey
         self.agentId = Constants.ElevenLabs.agentId
     }
 
     // MARK: - Connection Management
 
+    /// Starts a new conversation with the ElevenLabs agent
     func connect() async {
-        // TODO: Initialize ElevenLabs Conversational AI SDK
-        // Example (pseudo-code):
-        // let config = ElevenLabsConfig(apiKey: apiKey, agentId: agentId)
-        // await elevenLabsClient.connect(config: config)
+        print("🎤 Connecting to ElevenLabs with Agent ID: \(agentId)")
 
-        print("Connecting to ElevenLabs with Agent ID: \(agentId)")
+        do {
+            // STEP 1: After adding ElevenLabs SDK via Swift Package Manager, uncomment:
+            /*
+            let config = ConversationConfig(
+                conversationOverrides: ConversationOverrides(
+                    textOnly: false // Enable voice mode
+                )
+            )
 
-        // Simulate connection for now
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
-        isConnected = true
+            // For public agents (no API key needed in client)
+            conversation = try await ElevenLabs.startConversation(
+                agentId: agentId,
+                config: config
+            )
+
+            // For private agents (requires backend token fetch):
+            // let token = try await fetchConversationToken()
+            // conversation = try await ElevenLabs.startConversation(
+            //     conversationToken: token,
+            //     config: config
+            // )
+
+            setupConversationObservers()
+            isConnected = true
+            print("✅ Connected to ElevenLabs")
+            */
+
+            // TEMPORARY: Simulate connection until SDK is added
+            try await Task.sleep(nanoseconds: 500_000_000)
+            isConnected = true
+            print("⚠️ Simulated connection - Add ElevenLabs SDK to enable voice")
+
+        } catch {
+            print("❌ Failed to connect: \(error)")
+            self.error = error
+            isConnected = false
+        }
     }
 
+    /// Ends the current conversation
     func disconnect() {
-        // TODO: Disconnect from ElevenLabs
-        // await elevenLabsClient.disconnect()
+        print("🔌 Disconnecting from ElevenLabs")
 
+        // STEP 2: After adding SDK, uncomment:
+        /*
+        Task {
+            await conversation?.endConversation()
+        }
+        */
+
+        conversation = nil
         isConnected = false
         isListening = false
         isSpeaking = false
+        cancellables.removeAll()
     }
 
     // MARK: - Conversation Management
 
+    /// Starts listening for user input (automatically handled by SDK)
     func startConversation() async {
         guard isConnected else {
-            print("Not connected to ElevenLabs")
+            print("⚠️ Cannot start conversation - not connected")
             return
         }
 
-        // TODO: Start voice conversation
-        // await elevenLabsClient.startConversation()
-
         isListening = true
+        print("🎙️ Conversation active - speak now")
     }
 
+    /// Stops the active conversation
     func stopConversation() {
-        // TODO: Stop voice conversation
-        // elevenLabsClient.stopConversation()
-
         isListening = false
         isSpeaking = false
+        print("⏸️ Conversation paused")
     }
 
+    /// Sends a text message to the agent
     func sendMessage(_ message: String) async {
+        guard isConnected else {
+            print("⚠️ Cannot send message - not connected")
+            return
+        }
+
+        print("📤 Sending message: \(message)")
+
+        // STEP 3: After adding SDK, uncomment:
+        /*
+        do {
+            try await conversation?.sendMessage(message)
+        } catch {
+            print("❌ Failed to send message: \(error)")
+            self.error = error
+        }
+        */
+    }
+
+    /// Toggles microphone mute state
+    func toggleMute() async {
         guard isConnected else { return }
 
-        // TODO: Send text message to agent
-        // await elevenLabsClient.sendMessage(message)
-
-        print("Sending message: \(message)")
+        // STEP 4: After adding SDK, uncomment:
+        /*
+        do {
+            try await conversation?.toggleMute()
+            print("🔇 Mute toggled")
+        } catch {
+            print("❌ Failed to toggle mute: \(error)")
+        }
+        */
     }
 
     // MARK: - Context Management
 
+    /// Updates the conversation with user's goal context
+    /// Send this as an initial message when starting a conversation
     func updateConversationContext(goal: String, progress: Int, obstacles: String) async {
-        // TODO: Update the conversation context
-        // This can be done via session parameters or custom variables
-        // depending on how your ElevenLabs agent is configured
+        let contextMessage = """
+        [Context Update]
+        User's Goal: \(goal)
+        Current Streak: \(progress) days
+        Known Obstacles: \(obstacles)
 
-        let context = """
-        User's current goal: \(goal)
-        Current streak: \(progress) days
-        Known obstacles: \(obstacles)
+        Please reference this context in our conversation.
         """
 
-        print("Updating context: \(context)")
+        await sendMessage(contextMessage)
+    }
+
+    // MARK: - Private Methods
+
+    /// Sets up observers for conversation state changes
+    private func setupConversationObservers() {
+        // STEP 5: After adding SDK, uncomment to observe conversation state:
+        /*
+        guard let conv = conversation as? Conversation else { return }
+
+        // Monitor connection state
+        conv.$state
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] state in
+                self?.handleStateChange(state)
+            }
+            .store(in: &cancellables)
+
+        // Monitor messages
+        conv.$messages
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] messages in
+                self?.handleMessages(messages)
+            }
+            .store(in: &cancellables)
+
+        // Monitor agent state (speaking, thinking, etc.)
+        conv.$agentState
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] agentState in
+                self?.handleAgentState(agentState)
+            }
+            .store(in: &cancellables)
+
+        // Monitor client tool calls (if using custom functions)
+        conv.$clientToolCalls
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] toolCalls in
+                Task { [weak self] in
+                    await self?.handleToolCalls(toolCalls)
+                }
+            }
+            .store(in: &cancellables)
+        */
+    }
+
+    /// Handles conversation state changes
+    private func handleStateChange(_ state: Any) {
+        // STEP 6: After adding SDK, implement state handling
+        print("🔄 State changed: \(state)")
+    }
+
+    /// Handles incoming messages
+    private func handleMessages(_ messages: [Any]) {
+        // STEP 7: After adding SDK, implement message handling
+        print("💬 Received messages: \(messages.count)")
+    }
+
+    /// Handles agent state changes (thinking, speaking, etc.)
+    private func handleAgentState(_ agentState: Any) {
+        // STEP 8: After adding SDK, implement agent state handling
+        /*
+        switch agentState {
+        case .speaking:
+            isSpeaking = true
+            isListening = false
+        case .listening:
+            isSpeaking = false
+            isListening = true
+        case .thinking:
+            isSpeaking = false
+            isListening = false
+        default:
+            break
+        }
+        */
+        print("🤖 Agent state: \(agentState)")
+    }
+
+    /// Handles client tool calls from the agent
+    private func handleToolCalls(_ toolCalls: [Any]) async {
+        // STEP 9: After adding SDK, implement tool call handling
+        /*
+        for toolCall in toolCalls {
+            guard let call = toolCall as? ClientToolCallEvent else { continue }
+
+            do {
+                let parameters = try call.getParameters()
+                let result = await executeClientTool(
+                    name: call.toolName,
+                    parameters: parameters
+                )
+
+                if call.expectsResponse {
+                    try await conversation?.sendToolResult(
+                        for: call.toolCallId,
+                        result: result
+                    )
+                } else {
+                    conversation?.markToolCallCompleted(call.toolCallId)
+                }
+            } catch {
+                if call.expectsResponse {
+                    try? await conversation?.sendToolResult(
+                        for: call.toolCallId,
+                        result: ["error": error.localizedDescription],
+                        isError: true
+                    )
+                }
+            }
+        }
+        */
+    }
+
+    /// Executes a client tool (custom function called by the agent)
+    private func executeClientTool(name: String, parameters: [String: Any]) async -> [String: Any] {
+        print("🔧 Executing tool: \(name) with params: \(parameters)")
+
+        // Example: Handle custom tools
+        switch name {
+        case "mark_complete":
+            // Trigger completion in DataService
+            return ["success": true, "message": "Goal marked as complete"]
+        case "get_progress":
+            // Return current progress
+            return ["streak": 5, "this_week": 4]
+        default:
+            return ["error": "Unknown tool: \(name)"]
+        }
     }
 }
 
-// MARK: - ElevenLabs Integration Steps
+// MARK: - Conversation Message Model
+
+/// Simple message model for displaying conversation history
+struct ConversationMessage: Identifiable {
+    let id = UUID()
+    let role: String // "user" or "assistant"
+    let content: String
+    let timestamp: Date
+}
+
+// MARK: - Setup Instructions
 /*
- To complete this integration:
+ TO ENABLE ELEVENLABS VOICE:
 
- 1. Install ElevenLabs SDK
-    - Add the ElevenLabs iOS SDK via Swift Package Manager or CocoaPods
-    - URL: https://github.com/elevenlabs/elevenlabs-ios (or check their docs)
+ 1. Add Swift Package in Xcode:
+    - File → Add Package Dependencies
+    - URL: https://github.com/elevenlabs/elevenlabs-swift-sdk.git
+    - Version: 2.0.16 or later
 
- 2. Update Constants.swift
-    - Add your actual API key
-    - Add your Agent ID
+ 2. Uncomment the import at the top:
+    - import ElevenLabs
 
- 3. Implement SDK methods
-    - Replace placeholder methods with actual SDK calls
-    - Set up audio permissions in Info.plist
-    - Configure microphone usage description
+ 3. Uncomment all the SDK code marked with STEP comments above
 
- 4. Handle callbacks
-    - Implement delegates/callbacks for:
-      * Connection status changes
-      * Speech recognition results
-      * Agent responses
-      * Audio playback state
+ 4. Update Info.plist:
+    - NSMicrophoneUsageDescription: "For voice conversations with your coach"
+    - NSCameraUsageDescription: "For video features (optional)"
 
- 5. Add context passing
-    - Configure how to pass user's goal and progress to the agent
-    - This might be done via session initialization or message metadata
+ 5. Update Constants.swift:
+    - Add your Agent ID from https://elevenlabs.io/app/conversational-ai
+
+ 6. For private agents:
+    - Implement fetchConversationToken() to get tokens from your backend
+    - Never store API keys in the client app
+
+ The app will work with simulated connection until you complete these steps.
  */

@@ -33,11 +33,10 @@ An AI-powered motivational coaching app that uses voice to help people achieve t
 3. **Create Xcode Project**
    - Follow instructions in `SETUP_GUIDE.md`
 
-4. **Configure ElevenLabs**
-   - Create an agent at https://elevenlabs.io/app/conversational-ai
-   - Get your API key and Agent ID
-   - Update `Utilities/Constants.swift`
-   - See `ELEVENLABS_INTEGRATION.md` for detailed steps
+4. **Integrate ElevenLabs Voice**
+   - Follow the step-by-step guide: **[`SDK_INTEGRATION_STEPS.md`](SDK_INTEGRATION_STEPS.md)**
+   - Takes ~30 minutes to complete
+   - Results in fully functional voice coaching
 
 5. **Build and Run**
    - Select your target device
@@ -45,8 +44,10 @@ An AI-powered motivational coaching app that uses voice to help people achieve t
 
 ## Documentation
 
-- [`SETUP_GUIDE.md`](SETUP_GUIDE.md) - Complete setup instructions
-- [`ELEVENLABS_INTEGRATION.md`](ELEVENLABS_INTEGRATION.md) - Voice AI integration guide
+- 🚀 **[`SDK_INTEGRATION_STEPS.md`](SDK_INTEGRATION_STEPS.md)** - **START HERE** for ElevenLabs voice integration
+- [`SETUP_GUIDE.md`](SETUP_GUIDE.md) - Complete Xcode project setup
+- [`QUICK_START.md`](QUICK_START.md) - 10-minute quick start guide
+- [`ELEVENLABS_INTEGRATION.md`](ELEVENLABS_INTEGRATION.md) - Detailed voice AI concepts
 
 ## Project Structure
 
@@ -70,8 +71,8 @@ An AI-powered motivational coaching app that uses voice to help people achieve t
 - Progress tracking
 - Notification scheduling
 
-### 🚧 In Progress
-- ElevenLabs SDK integration (placeholder implemented)
+### 🚧 Ready to Integrate
+- ElevenLabs SDK integration (service ready, follow [`SDK_INTEGRATION_STEPS.md`](SDK_INTEGRATION_STEPS.md))
 
 ### 📋 Planned
 - Cloud sync
