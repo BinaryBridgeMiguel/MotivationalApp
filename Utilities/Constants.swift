@@ -4,8 +4,8 @@ import SwiftUI
 enum Constants {
     // MARK: - ElevenLabs Configuration
     enum ElevenLabs {
-        static let apiKey = "YOUR_ELEVENLABS_API_KEY" // TODO: Replace with your actual API key
-        static let agentId = "YOUR_AGENT_ID" // TODO: Replace with your actual Agent ID
+        static let apiKey = "sk_2e90808718aaedc953cba64145a716c9c490c29e9cc7bdc7" // TODO: Replace with your actual API key
+        static let agentId = "agent_0201k91wz6yve6mtena6nnwgy0d9" // TODO: Replace with your actual Agent ID
     }
 
     // MARK: - App Configuration

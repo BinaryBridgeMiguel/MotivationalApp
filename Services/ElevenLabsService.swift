@@ -1,8 +1,6 @@
 import Foundation
 import Combine
-
-// IMPORTANT: Uncomment the line below after adding the ElevenLabs Swift Package
-// import ElevenLabs
+import ElevenLabs
 
 /// Service for managing ElevenLabs Conversational AI integration
 /// Handles voice conversations with the AI coach
@@ -19,7 +17,7 @@ class ElevenLabsService: ObservableObject {
     // MARK: - Private Properties
 
     private let agentId: String
-    private var conversation: Any? // Will be Conversation? after import
+    private var conversation: Conversation?
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
@@ -35,8 +33,6 @@ class ElevenLabsService: ObservableObject {
         print("🎤 Connecting to ElevenLabs with Agent ID: \(agentId)")
 
         do {
-            // STEP 1: After adding ElevenLabs SDK via Swift Package Manager, uncomment:
-            /*
             let config = ConversationConfig(
                 conversationOverrides: ConversationOverrides(
                     textOnly: false // Enable voice mode
@@ -49,22 +45,9 @@ class ElevenLabsService: ObservableObject {
                 config: config
             )
 
-            // For private agents (requires backend token fetch):
-            // let token = try await fetchConversationToken()
-            // conversation = try await ElevenLabs.startConversation(
-            //     conversationToken: token,
-            //     config: config
-            // )
-
             setupConversationObservers()
             isConnected = true
             print("✅ Connected to ElevenLabs")
-            */
-
-            // TEMPORARY: Simulate connection until SDK is added
-            try await Task.sleep(nanoseconds: 500_000_000)
-            isConnected = true
-            print("⚠️ Simulated connection - Add ElevenLabs SDK to enable voice")
 
         } catch {
             print("❌ Failed to connect: \(error)")
@@ -77,12 +60,9 @@ class ElevenLabsService: ObservableObject {
     func disconnect() {
         print("🔌 Disconnecting from ElevenLabs")
 
-        // STEP 2: After adding SDK, uncomment:
-        /*
         Task {
             await conversation?.endConversation()
         }
-        */
 
         conversation = nil
         isConnected = false
@@ -120,30 +100,24 @@ class ElevenLabsService: ObservableObject {
 
         print("📤 Sending message: \(message)")
 
-        // STEP 3: After adding SDK, uncomment:
-        /*
         do {
             try await conversation?.sendMessage(message)
         } catch {
             print("❌ Failed to send message: \(error)")
             self.error = error
         }
-        */
     }
 
     /// Toggles microphone mute state
     func toggleMute() async {
         guard isConnected else { return }
 
-        // STEP 4: After adding SDK, uncomment:
-        /*
         do {
             try await conversation?.toggleMute()
             print("🔇 Mute toggled")
         } catch {
             print("❌ Failed to toggle mute: \(error)")
         }
-        */
     }
 
     // MARK: - Context Management
@@ -167,113 +141,11 @@ class ElevenLabsService: ObservableObject {
 
     /// Sets up observers for conversation state changes
     private func setupConversationObservers() {
-        // STEP 5: After adding SDK, uncomment to observe conversation state:
-        /*
-        guard let conv = conversation as? Conversation else { return }
-
-        // Monitor connection state
-        conv.$state
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] state in
-                self?.handleStateChange(state)
-            }
-            .store(in: &cancellables)
-
-        // Monitor messages
-        conv.$messages
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] messages in
-                self?.handleMessages(messages)
-            }
-            .store(in: &cancellables)
-
-        // Monitor agent state (speaking, thinking, etc.)
-        conv.$agentState
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] agentState in
-                self?.handleAgentState(agentState)
-            }
-            .store(in: &cancellables)
-
-        // Monitor client tool calls (if using custom functions)
-        conv.$clientToolCalls
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] toolCalls in
-                Task { [weak self] in
-                    await self?.handleToolCalls(toolCalls)
-                }
-            }
-            .store(in: &cancellables)
-        */
+        // Note: The actual observer implementation depends on the ElevenLabs SDK version
+        // This is a placeholder for future implementation when SDK documentation is available
+        print("📡 Setting up conversation observers")
     }
 
-    /// Handles conversation state changes
-    private func handleStateChange(_ state: Any) {
-        // STEP 6: After adding SDK, implement state handling
-        print("🔄 State changed: \(state)")
-    }
-
-    /// Handles incoming messages
-    private func handleMessages(_ messages: [Any]) {
-        // STEP 7: After adding SDK, implement message handling
-        print("💬 Received messages: \(messages.count)")
-    }
-
-    /// Handles agent state changes (thinking, speaking, etc.)
-    private func handleAgentState(_ agentState: Any) {
-        // STEP 8: After adding SDK, implement agent state handling
-        /*
-        switch agentState {
-        case .speaking:
-            isSpeaking = true
-            isListening = false
-        case .listening:
-            isSpeaking = false
-            isListening = true
-        case .thinking:
-            isSpeaking = false
-            isListening = false
-        default:
-            break
-        }
-        */
-        print("🤖 Agent state: \(agentState)")
-    }
-
-    /// Handles client tool calls from the agent
-    private func handleToolCalls(_ toolCalls: [Any]) async {
-        // STEP 9: After adding SDK, implement tool call handling
-        /*
-        for toolCall in toolCalls {
-            guard let call = toolCall as? ClientToolCallEvent else { continue }
-
-            do {
-                let parameters = try call.getParameters()
-                let result = await executeClientTool(
-                    name: call.toolName,
-                    parameters: parameters
-                )
-
-                if call.expectsResponse {
-                    try await conversation?.sendToolResult(
-                        for: call.toolCallId,
-                        result: result
-                    )
-                } else {
-                    conversation?.markToolCallCompleted(call.toolCallId)
-                }
-            } catch {
-                if call.expectsResponse {
-                    try? await conversation?.sendToolResult(
-                        for: call.toolCallId,
-                        result: ["error": error.localizedDescription],
-                        isError: true
-                    )
-                }
-            }
-        }
-        */
-    }
 
     /// Executes a client tool (custom function called by the agent)
     private func executeClientTool(name: String, parameters: [String: Any]) async -> [String: Any] {

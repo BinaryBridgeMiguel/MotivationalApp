@@ -3,7 +3,11 @@ import SwiftData
 
 @main
 struct MotivationalCoachApp: App {
-    @StateObject private var notificationService = NotificationService()
+    @StateObject private var notificationService: NotificationService = {
+        let service = NotificationService()
+        service.setupNotificationCategories()
+        return service
+    }()
 
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -28,9 +32,6 @@ struct MotivationalCoachApp: App {
                 .modelContainer(sharedModelContainer)
                 .environmentObject(DataService(modelContainer: sharedModelContainer))
                 .environmentObject(notificationService)
-                .onAppear {
-                    notificationService.setupNotificationCategories()
-                }
         }
     }
 }

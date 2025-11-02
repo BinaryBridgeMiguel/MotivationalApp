@@ -22,6 +22,7 @@
 		86EB22822EB76B32009B91F8 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EB22652EB76B32009B91F8 /* Goal.swift */; };
 		86EB22832EB76B32009B91F8 /* CoachConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EB226E2EB76B32009B91F8 /* CoachConversationView.swift */; };
 		86EB22852EB76C88009B91F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86EB22842EB76C88009B91F8 /* Assets.xcassets */; };
+		86FB4BD62EB7756D00CB78E1 /* ElevenLabs in Frameworks */ = {isa = PBXBuildFile; productRef = 86FB4BD52EB7756D00CB78E1 /* ElevenLabs */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86FB4BD62EB7756D00CB78E1 /* ElevenLabs in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,6 +217,7 @@
 			);
 			name = MotivationalCoachApp;
 			packageProductDependencies = (
+				86FB4BD52EB7756D00CB78E1 /* ElevenLabs */,
 			);
 			productName = MotivationalCoachApp;
 			productReference = 86795D702EB76917006346C5 /* MotivationalCoachApp.app */;
@@ -298,6 +301,9 @@
 			);
 			mainGroup = 86795D672EB76917006346C5;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				86FB4BD42EB7756D00CB78E1 /* XCRemoteSwiftPackageReference "elevenlabs-swift-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 86795D712EB76917006346C5 /* Products */;
 			projectDirPath = "";
@@ -518,7 +524,9 @@
 				DEVELOPMENT_TEAM = A487VR8892;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access may be required for future video features.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone to enable voice conversations with your AI coach.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "We use speech recognition to understand your voice commands and responses.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -551,7 +559,9 @@
 				DEVELOPMENT_TEAM = A487VR8892;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access may be required for future video features.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone to enable voice conversations with your AI coach.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "We use speech recognition to understand your voice commands and responses.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -698,6 +708,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		86FB4BD42EB7756D00CB78E1 /* XCRemoteSwiftPackageReference "elevenlabs-swift-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elevenlabs/elevenlabs-swift-sdk.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		86FB4BD52EB7756D00CB78E1 /* ElevenLabs */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 86FB4BD42EB7756D00CB78E1 /* XCRemoteSwiftPackageReference "elevenlabs-swift-sdk" */;
+			productName = ElevenLabs;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 86795D682EB76917006346C5 /* Project object */;
 }

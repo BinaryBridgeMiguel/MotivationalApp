@@ -15,7 +15,7 @@ struct WelcomeView: View {
 
             VStack(spacing: Constants.UI.spacing * 2) {
                 Spacer()
-
+                
                 // App Icon/Logo placeholder
                 Image(systemName: "figure.run.circle.fill")
                     .resizable()
