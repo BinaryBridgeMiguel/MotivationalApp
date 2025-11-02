@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 struct CoachConversationView: View {
     @Environment(\.dismiss) var dismiss
@@ -230,8 +231,9 @@ struct PressButtonStyle: ButtonStyle {
 }
 
 #Preview {
-    CoachConversationView()
-        .environmentObject(DataService(
-            modelContainer: try! ModelContainer(for: User.self, Goal.self, DailyProgress.self, ConversationSession.self)
-        ))
+    let schema = Schema([User.self, Goal.self, DailyProgress.self, ConversationSession.self])
+    let container = try! ModelContainer(for: schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+
+    return CoachConversationView()
+        .environmentObject(DataService(modelContainer: container))
 }

@@ -3,16 +3,7 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @StateObject private var dataService: DataService
-
-    init() {
-        // Note: This is a workaround for initializing DataService with environment
-        // In actual implementation, you may need to handle this differently
-        let container = try! ModelContainer(
-            for: User.self, Goal.self, DailyProgress.self, ConversationSession.self
-        )
-        _dataService = StateObject(wrappedValue: DataService(modelContainer: container))
-    }
+    @EnvironmentObject var dataService: DataService
 
     var body: some View {
         Group {
@@ -22,11 +13,16 @@ struct ContentView: View {
                 WelcomeView()
             }
         }
-        .environmentObject(dataService)
     }
 }
 
 #Preview {
-    ContentView()
-        .modelContainer(for: [User.self, Goal.self, DailyProgress.self, ConversationSession.self], inMemory: true)
+    let container = try! ModelContainer(
+        for: User.self, Goal.self, DailyProgress.self, ConversationSession.self,
+        configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+    )
+
+    return ContentView()
+        .environmentObject(DataService(modelContainer: container))
+        .modelContainer(container)
 }

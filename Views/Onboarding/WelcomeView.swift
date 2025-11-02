@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 struct WelcomeView: View {
     @Environment(\.dismiss) var dismiss
@@ -99,8 +100,9 @@ struct WelcomeView: View {
 }
 
 #Preview {
-    WelcomeView()
-        .environmentObject(DataService(
-            modelContainer: try! ModelContainer(for: User.self, Goal.self, DailyProgress.self, ConversationSession.self)
-        ))
+    let schema = Schema([User.self, Goal.self, DailyProgress.self, ConversationSession.self])
+    let container = try! ModelContainer(for: schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+
+    return WelcomeView()
+        .environmentObject(DataService(modelContainer: container))
 }

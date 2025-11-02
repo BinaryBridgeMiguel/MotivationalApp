@@ -1,13 +1,10 @@
 import Foundation
 import UserNotifications
 
-@MainActor
 class NotificationService: ObservableObject {
-    static let shared = NotificationService()
-
     @Published var isAuthorized = false
 
-    private init() {
+    init() {
         checkAuthorization()
     }
 

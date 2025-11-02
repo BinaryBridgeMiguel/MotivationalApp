@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 struct HomeView: View {
     @EnvironmentObject var dataService: DataService
@@ -242,8 +243,9 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
-        .environmentObject(DataService(
-            modelContainer: try! ModelContainer(for: User.self, Goal.self, DailyProgress.self, ConversationSession.self)
-        ))
+    let schema = Schema([User.self, Goal.self, DailyProgress.self, ConversationSession.self])
+    let container = try! ModelContainer(for: schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+
+    return HomeView()
+        .environmentObject(DataService(modelContainer: container))
 }

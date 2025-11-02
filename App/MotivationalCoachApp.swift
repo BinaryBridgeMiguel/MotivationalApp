@@ -3,7 +3,7 @@ import SwiftData
 
 @main
 struct MotivationalCoachApp: App {
-    @StateObject private var notificationService = NotificationService.shared
+    @StateObject private var notificationService = NotificationService()
 
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -22,16 +22,15 @@ struct MotivationalCoachApp: App {
         }
     }()
 
-    init() {
-        // Setup notification categories
-        NotificationService.shared.setupNotificationCategories()
-    }
-
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .modelContainer(sharedModelContainer)
+                .environmentObject(DataService(modelContainer: sharedModelContainer))
                 .environmentObject(notificationService)
+                .onAppear {
+                    notificationService.setupNotificationCategories()
+                }
         }
     }
 }

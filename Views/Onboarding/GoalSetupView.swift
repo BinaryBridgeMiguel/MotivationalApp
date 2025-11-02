@@ -1,8 +1,10 @@
 import SwiftUI
+import SwiftData
 
 struct GoalSetupView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var dataService: DataService
+    @EnvironmentObject var notificationService: NotificationService
     @State private var currentStep = 0
     @State private var isVoiceMode = false
 
@@ -250,8 +252,8 @@ struct GoalSetupView: View {
 
         // Request notification permissions
         Task {
-            _ = await NotificationService.shared.requestAuthorization()
-            await NotificationService.shared.scheduleDailyCheckIn()
+            _ = await notificationService.requestAuthorization()
+            await notificationService.scheduleDailyCheckIn()
         }
 
         dismiss()
@@ -259,8 +261,9 @@ struct GoalSetupView: View {
 }
 
 #Preview {
-    GoalSetupView()
-        .environmentObject(DataService(
-            modelContainer: try! ModelContainer(for: User.self, Goal.self, DailyProgress.self, ConversationSession.self)
-        ))
+    let schema = Schema([User.self, Goal.self, DailyProgress.self, ConversationSession.self])
+    let container = try! ModelContainer(for: schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+
+    return GoalSetupView()
+        .environmentObject(DataService(modelContainer: container))
 }
