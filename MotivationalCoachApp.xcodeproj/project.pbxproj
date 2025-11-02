@@ -23,6 +23,11 @@
 		86EB22832EB76B32009B91F8 /* CoachConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EB226E2EB76B32009B91F8 /* CoachConversationView.swift */; };
 		86EB22852EB76C88009B91F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86EB22842EB76C88009B91F8 /* Assets.xcassets */; };
 		86FB4BD62EB7756D00CB78E1 /* ElevenLabs in Frameworks */ = {isa = PBXBuildFile; productRef = 86FB4BD52EB7756D00CB78E1 /* ElevenLabs */; };
+		86FB4BE22EB7ED5C00CB78E1 /* RunningSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FB4BDE2EB7ED5C00CB78E1 /* RunningSchedule.swift */; };
+		86FB4BE32EB7ED5C00CB78E1 /* Milestone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FB4BDD2EB7ED5C00CB78E1 /* Milestone.swift */; };
+		86FB4BE42EB7ED5C00CB78E1 /* RunSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FB4BDF2EB7ED5C00CB78E1 /* RunSession.swift */; };
+		86FB4BE52EB7ED5C00CB78E1 /* ScheduledRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FB4BE02EB7ED5C00CB78E1 /* ScheduledRun.swift */; };
+		86FB4BE62EB7ED5C00CB78E1 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FB4BE12EB7ED5C00CB78E1 /* Task.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +66,11 @@
 		86EB22722EB76B32009B91F8 /* GoalSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalSetupView.swift; sourceTree = "<group>"; };
 		86EB22732EB76B32009B91F8 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		86EB22842EB76C88009B91F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		86FB4BDD2EB7ED5C00CB78E1 /* Milestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Milestone.swift; sourceTree = "<group>"; };
+		86FB4BDE2EB7ED5C00CB78E1 /* RunningSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningSchedule.swift; sourceTree = "<group>"; };
+		86FB4BDF2EB7ED5C00CB78E1 /* RunSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunSession.swift; sourceTree = "<group>"; };
+		86FB4BE02EB7ED5C00CB78E1 /* ScheduledRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledRun.swift; sourceTree = "<group>"; };
+		86FB4BE12EB7ED5C00CB78E1 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -139,6 +149,11 @@
 		86EB22672EB76B32009B91F8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				86FB4BDD2EB7ED5C00CB78E1 /* Milestone.swift */,
+				86FB4BDE2EB7ED5C00CB78E1 /* RunningSchedule.swift */,
+				86FB4BDF2EB7ED5C00CB78E1 /* RunSession.swift */,
+				86FB4BE02EB7ED5C00CB78E1 /* ScheduledRun.swift */,
+				86FB4BE12EB7ED5C00CB78E1 /* Task.swift */,
 				86EB22632EB76B32009B91F8 /* ConversationSession.swift */,
 				86EB22642EB76B32009B91F8 /* DailyProgress.swift */,
 				86EB22652EB76B32009B91F8 /* Goal.swift */,
@@ -353,6 +368,11 @@
 				86EB227A2EB76B32009B91F8 /* WelcomeView.swift in Sources */,
 				86EB227B2EB76B32009B91F8 /* Constants.swift in Sources */,
 				86EB227C2EB76B32009B91F8 /* MotivationalCoachApp.swift in Sources */,
+				86FB4BE22EB7ED5C00CB78E1 /* RunningSchedule.swift in Sources */,
+				86FB4BE32EB7ED5C00CB78E1 /* Milestone.swift in Sources */,
+				86FB4BE42EB7ED5C00CB78E1 /* RunSession.swift in Sources */,
+				86FB4BE52EB7ED5C00CB78E1 /* ScheduledRun.swift in Sources */,
+				86FB4BE62EB7ED5C00CB78E1 /* Task.swift in Sources */,
 				86EB227D2EB76B32009B91F8 /* ConversationSession.swift in Sources */,
 				86EB227E2EB76B32009B91F8 /* DailyProgress.swift in Sources */,
 				86EB227F2EB76B32009B91F8 /* GoalSetupView.swift in Sources */,

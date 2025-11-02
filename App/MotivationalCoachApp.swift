@@ -14,7 +14,12 @@ struct MotivationalCoachApp: App {
             User.self,
             Goal.self,
             DailyProgress.self,
-            ConversationSession.self
+            ConversationSession.self,
+            RunningSchedule.self,
+            ScheduledRun.self,
+            RunSession.self,
+            CoachTask.self,
+            Milestone.self
         ])
 
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
